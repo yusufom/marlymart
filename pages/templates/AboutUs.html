@@ -1,0 +1,210 @@
+{% extends "index.html" %}
+
+{% block title %}
+<title>{{Home.title}} | About Us</title>
+{% endblock title %}
+{% block navigation %}
+<!-- Collect the nav links, forms, and other content for toggling -->
+{% load mptt_tags %}
+<div class="collapse navbar-collapse" id="navbar-menu">
+    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+        <li class="nav-item"><a class="nav-link" href="{% url 'Home' %}">Home</a></li>
+        <li class="nav-item  active" ><a class="nav-link" href="{% url 'AboutUs' %}">About Us</a></li>
+        <li class="dropdown megamenu-fw">
+            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Product</a>
+            <ul class="dropdown-menu megamenu-content" role="menu">
+                <li>
+                   <div class="row">
+                    {% recursetree category %}
+                    <div class="col-menu col-md-2">
+                        <h6><a {% if not node.is_leaf_node %} class="title" {% endif %} href="{% url 'CategoryView' node.id node.slug %}" title="" >{{node.title }}</a></h6>
+                        <div class="content">
+                            {% if not node.is_leaf_node %}
+                            <ul class="children menu-col">
+                                {{children}}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endrecursetree %}
+                </div>>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'Shop' %}">Shop</a></li>
+    <li class="dropdown">
+        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Account</a>
+        <ul class="dropdown-menu">
+            <li><a href="{% url 'Login' %}">Login</a></li>
+            <li><a href="{% url 'Register' %}">Register</a></li>
+        </ul>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'Contact' %}">Contact Us</a></li>
+</ul>
+</div>
+<!-- /.navbar-collapse -->
+{% endblock navigation %}
+{% block content %}
+<!-- Start All Title Box -->
+<div class="all-title-box" style="background: url('{{about.pagepic.url}}') no-repeat center center;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>ABOUT US</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'Home' %}">Home</a></li>
+                    <li class="breadcrumb-item active">ABOUT US</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+
+<!-- Start About Page  -->
+<div class="about-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2 class="noo-sh-title">We are <span>{{Home.title}}</span></h2>
+                <p>{{about.about | safe}}
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="banner-frame"> <img class="img-thumbnail img-fluid" src="{{about.aboutpic.url}}" alt="" />
+                </div>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-sm-6 col-lg-4">
+                <div class="service-block-inner">
+                    <h3>{{about.top1}}</h3>
+                    <p>{{about.top1p |safe}} </p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="service-block-inner">
+                    <h3>{{about.top2}}</h3>
+                    <p>{{about.top2p |safe}}</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="service-block-inner">
+                    <h3>{{about.top3}}</h3>
+                    <p>{{about.top3p |safe}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row my-4">
+            <div class="col-12">
+                <h2 class="noo-sh-title">{{about.meetteam |safe}}</h2>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="hover-team">
+                    <div class="our-team"> <img src="{{about.teampic1.url}}" alt="" style="height: 320px" />
+                        <div class="team-content">
+                            <h3 class="title">{{about.name1}}</h3> <span class="post">{{about.role1}}</span> </div>
+                            <ul class="social">
+                                <li>
+                                    <a href="#" class="fab fa-facebook"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="fab fa-twitter"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="fab fa-google-plus"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="fab fa-instagram"></a>
+                                </li>
+                            </ul>
+                            <div class="icon"> <i class="fa fa-plus" aria-hidden="true"></i> </div>
+                        </div>
+                        <div class="team-description">
+                            <p>{{about.description1 |safe}}</p>
+                        </div>
+                        <hr class="my-0"> </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="hover-team">
+                            <div class="our-team"> <img src="{{about.teampic2.url}}" alt="" style="height: 320px"/>
+                                <div class="team-content">
+                                    <h3 class="title">{{about.name2}}</h3> <span class="post">{{about.role2}}</span> </div>
+                                    <ul class="social">
+                                        <li>
+                                            <a href="#" class="fab fa-facebook"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="fab fa-twitter"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="fab fa-google-plus"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="fab fa-instagram"></a>
+                                        </li>
+                                    </ul>
+                                    <div class="icon"> <i class="fa fa-plus" aria-hidden="true"></i> </div>
+                                </div>
+                                <div class="team-description">
+                                    <p>{{about.description2 |safe}}</p>
+                                </div>
+                                <hr class="my-0"> </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="hover-team">
+                                    <div class="our-team"> <img src="{{about.teampic3.url}}" alt="" style="height: 320px"/>
+                                        <div class="team-content">
+                                            <h3 class="title">{{about.name3}}</h3> <span class="post">{{about.role3}}</span> </div>
+                                            <ul class="social">
+                                                <li>
+                                                    <a href="#" class="fab fa-facebook"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="fab fa-twitter"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="fab fa-google-plus"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="fab fa-instagram"></a>
+                                                </li>
+                                            </ul>
+                                            <div class="icon"> <i class="fa fa-plus" aria-hidden="true"></i> </div>
+                                        </div>
+                                        <div class="team-description">
+                                            <p>{{about.description3 |safe}}</p>
+                                        </div>
+                                        <hr class="my-0"> </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="hover-team">
+                                            <div class="our-team"> <img src="{{about.teampic4.url}}" alt="" style="height: 320px" />
+                                                <div class="team-content">
+                                                    <h3 class="title">{{about.name4}}</h3> <span class="post">{{about.role4}}</span> </div>
+                                                    <ul class="social">
+                                                        <li>
+                                                            <a href="#" class="fab fa-facebook"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="fab fa-twitter"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="fab fa-google-plus"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="fab fa-instagram"></a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="icon"> <i class="fa fa-plus" aria-hidden="true"></i> </div>
+                                                </div>
+                                                <div class="team-description">
+                                                    <p>{{about.description4 | safe}}</p>
+                                                </div>
+                                                <hr class="my-0"> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End About Page -->
+                                {% endblock content %}

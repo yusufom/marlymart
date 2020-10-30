@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Basic -->
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="{{Home.keywords}}">
+    <meta name="description" content="{{Home.description}}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href=" {% static 'profile/css/fontapi.css'%}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <!-- jQuery !-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  {% block profile %}
+  {% block title %}
+  <title>{{Home.title}} | Home</title>
+  {% endblock title %}
+</head>
+
+<body>
+    <div class="bodies">
+        <!-- Start Main Top -->
+        <div class="main-top">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="text-slid-box">
+                            <div id="offer-box" class="carouselTicker">
+                                <ul class="offer-box">
+                                    <li><i class="fab fa-opencart"></i> {{Home.offerbox1}}</li>
+                                    <li><i class="fab fa-opencart"></i> {{Home.offerbox2}}</li>
+                                    <li><i class="fab fa-opencart"></i> {{Home.offerbox3}}</li>
+                                    <li><i class="fab fa-opencart"></i> {{Home.offerbox4}}</li>
+                                    <li><i class="fab fa-opencart"></i> {{Home.offerbox5}}</li>
+                                    <li><i class="fab fa-opencart"></i> {{Home.offerbox6}}</li>
+                                    <li><i class="fab fa-opencart"></i> {{Home.offerbox7}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="our-link">
+                            <ul>
+                                <li><a href="{% url 'Vendors' %}">Merchants</a></li>
+                                <li><a href="{% url 'Contact' %}">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Main Top -->
+
+        <!-- Start Main Top -->
+        <header class="main-header">
+            <!-- Start Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+                <div class="container">
+                    <!-- Start Header Navigation -->
+                    <div class="navbar-header site-logo">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <a class="navbar-brand" href="{% url 'Home' %}"><strong class="text-change">Marly</strong>Mart</a>
+                    </div>
+                    <!-- End Header Navigation -->
+                    {% block navigation %}
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    {% load mptt_tags %}
+                    <div class="collapse navbar-collapse" id="navbar-menu">
+                        <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                            <li class="nav-item active"><a class="nav-link" href="{% url 'Home' %}">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'AboutUs' %}">About Us</a></li>
+                            <li class="dropdown megamenu-fw">
+                                <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Product</a>
+                                <ul class="dropdown-menu megamenu-content" role="menu">
+                                    <li>
+                                        <div class="row">
+                                            {% recursetree category %}
+                                            <div class="col-menu col-md-2">
+                                                <h6><a {% if not node.is_leaf_node %} class="title" {% endif %} href="{% url 'CategoryView' node.id node.slug %}" title="" >{{node.title }}</a></h6>
+                                                <div class="content">
+                                                    {% if not node.is_leaf_node %}
+                                                    <ul class="children menu-col">
+                                                        {{children}}
+                                                    </ul>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            {% endrecursetree %}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'Shop' %}">Shop</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Account</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'Login' %}">Login</a></li>
+                                    <li><a href="{% url 'Register' %}">Register</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'Contact' %}">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                    {% endblock navigation %}
+                <!-- Start Atribute Navigation -->
+                <div class="attr-nav">
+                    <ul>
+                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                    </ul>
+                </div>
+                <!-- End Atribute Navigation -->
+            </div>
+        </nav>
+        <!-- End Navigation -->
+    </header>
+    <!-- End Main Top -->
+    <script>
+      $(function() {
+        $("#query").autocomplete({
+            source: "/search_auto/",
+            select: function (event, ui) { //item selected
+                AutoCompleteSelectHandler(event, ui)
+            },
+            minLength: 2,
+        });
+        });
+        function AutoCompleteSelectHandler(event, ui)
+        {
+            var selectedObj = ui.item;
+        }
+    </script>
+    <!-- Start Top Search -->
+    <div class="top-search">
+        <div class="container">
+            <div class="input-group">
+                <form class="form-inline my-2 my-lg-0 input-group" action="/search/" method="post">
+                    {% csrf_token %}
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    <input id="query" name="query" type="text" class="form-control" placeholder="Search">
+                    <select name="catid" class="form-control">
+                        <option value="0">All Categories</option>
+                        {% load mptt_tags %}
+                        {% recursetree category %}
+                        {% if node.is_leaf_node %}
+                        <option value="{{ node.id }}">{{ node.title }}</option>
+                        {% endif %}
+                        {% if not node.is_leaf_node %}
+                        <optgroup label="{{ node.title }}">{{ children }}</optgroup>
+                        {% endif %}
+                        {% endrecursetree %}
+                    </select>
+                    <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+                </form>   
+            </div>
+        </div>
+    </div>
+    {% block content %}
+    <!-- End Top Search -->
+    <!-- Start Slider -->
+    <div id="slides-shop" class="cover-slides">
+        <ul class="slides-container">
+            <li class="text-left">
+                <img src="{{Home.slider1img.url}}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Welcome To <br> {{Home.title}}</strong></h1>
+                            <p class="m-b-40">{{Home.slider1P | safe}}</p>
+                            <p><a class="btn hvr-hover" href="#">{{Home.slider1A}}</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-center">
+                <img src="{{Home.slider2img.url}}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>{{Home.slider2H1}}</strong></h1>
+                            <p class="m-b-40">{{Home.slider2P | safe}}</p>
+                            <p><a class="btn hvr-hover" href="#">{{Home.slider2A}}</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-right">
+                <img src="{{Home.slider3img.url}}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>{{Home.slider3H1}}</strong></h1>
+                            <p class="m-b-40">{{Home.slider3P | safe}}</p>
+                            <p><a class="btn hvr-hover" href="#">{{Home.slider3A}}</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="slides-navigation">
+            <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+        </div>
+    </div>
+    <!-- End Slider -->
+
+    <!-- Start Categories  -->
+    {% load mptt_tags %}
+    <div class="categories-shop">
+        <div class="container">
+            <h1 class="text-center title-all">Categories</h1>
+            <div class="row" style="margin: 0 auto;">
+                {% recursetree category %}
+                {% if node.is_root_node %}
+                <div class="col-xs-2" style="margin:0 auto;  margin-bottom: 10px;">
+                    <div class="shop-cat-box" style="margin: 0 auto;height: 150px; width: 150px; ">
+                        <img class="img-fluid" src="{{node.Image.url}}" alt=""  style="width: 100%; height: 100px" />
+                        <a class="btn hvr-hover" href="{% url 'CategoryView' node.id node.slug %}">{{node.title}}</a>
+                    </div>
+                </div>
+                {% endif %}
+                {% endrecursetree %}
+            </div>
+        </div>
+    </div>
+    <!-- End Categories -->
+
+    <!-- Start Products  -->
+    <div class="products-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>{{Home.featuredPH1}}</h1>
+                        <p>{{Home.featuredPP}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="special-menu text-center">
+                        <div class="button-group filter-button-group">
+                            <button class="active" data-filter="*">{{Home.Buttongroup1}}</button>
+                            <button data-filter=".top-featured">{{Home.Buttongroup2}}</button>
+                            <button data-filter=".new">{{Home.Buttongroup3}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row special-list" style="margin: 0 auto;position: absolute; left: 15px">
+                {% for product_list in product_list %}
+                <div class="col-xs-3 special-grid new" style="margin:0 auto; margin-right: 20px;">
+                    <div class="products-single fix" style="height: 300px; width: 200px; margin-bottom: 30px;">
+                        <div class="box-img-hover">
+                            <div class="type-lb">
+                                <p class="sale">{{product_list.availability}}</p>
+                            </div>
+                            <img src="{{product_list.product_pic.url}}" class="img-fluid" alt="Image" style="width: 200px; height: 200px;">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a href="{% url 'ProductView' product_list.id product_list.title %}" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                </ul>
+                                <a class="cart" href="#">Place Order</a>
+                            </div>
+                        </div>
+                        <div class="why-text">
+                            <h4 style="font-size: 13px; height: 27px; overflow: hidden; margin-bottom: 10px; margin-top: -10px;">{{product_list.title}}</h4>
+                            <h5> ₦ {{product_list.price}}</h5>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% for product_lists in product_lists %}
+                <div class="col-xs-3 special-grid top-featured" style="margin-right: 20px;">
+                    <div class="products-single fix" style="height: 300px; width: 200px; margin-bottom: 30px;">
+                        <div class="box-img-hover">
+                            <div class="type-lb">
+                                <p class="sale">{{product_lists.availability}}</p>
+                            </div>
+                            <img src="{{product_lists.product_pic.url}}" class="img-fluid" alt="Image" style="width: 200px; height: 200px;">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a href="{% url 'ProductView' product_lists.id product_lists.title %}" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                </ul>
+                                <a class="cart" href="#">Order</a>
+                            </div>
+                        </div>
+                        <div class="why-text">
+                            <h4 style="font-size: 13px; height: 27px; overflow: hidden; margin-bottom: 10px; margin-top: -10px;">{{product_lists.title}}</h4>
+                            <h5> ₦ {{product_lists.price}}</h5>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="rowe">
+      <div class="col-xl-6 Aim">
+        <h2>{{Home.aimh2}}</h2>
+        <p>{{Home.aimp |safe}}</p>
+        
+    </div>
+    <div class="col-xl-6 Aim">
+        <img src="{{Home.aimimg.url}}" alt="">
+    </div>
+</div>
+
+<div class="container-sm rowe">
+    <div class="col-xl-6">
+        <div class="back"></div>
+        <div class="front" style="background-image: url('{{Home.front.url}}');"></div>   
+    </div>
+    <div class="col-xl-6 text">
+        <h4>{{Home.popularQuote |safe}}</h4>
+        <p>{{Home.quoter |safe}}</p>
+    </div> 
+</div>
+
+<!-- End Products  -->
+{% endblock content %}
+<!-- Start Instagram Feed  -->
+<div class="instagram-box">
+    <div class="main-instagram owl-carousel owl-theme">
+        {% for insta in insta %}
+        <div class="item">
+            <div class="ins-inner-box">
+                <img src="{{insta.instaimage.url}}" alt="" style="height: 200px;"/>
+                <div class="hov-in">
+                    <a href="{{insta.instalink}}"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<!-- End Instagram Feed  -->
+{% endblock profile %}
+<!-- Start Footer  -->
+<footer>
+    <div class="footer-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-widget">
+                        <h4>About {{Home.title}}</h4>
+                        <p>{{Home.aboutus | safe}}</p>
+                        <ul>
+                            <li><a href="{{Home.facebook}}"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="{{Home.twitter}}"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="{{Home.linkedin}}"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                            <li><a href="{{Home.email}}"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                            <li><a href="{{Home.whatsapp}}"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
+                            <li><a href="{{Home.instagram}}"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-link">
+                        <h4>Information</h4>
+                        <ul>
+                            <li><a href="{% url 'AboutUs' %}">About Us</a></li>
+                            <li><a href="{% url 'Contact' %}">Contact Us</a></li>
+                            <li><a href="{% url 'Vendors' %}">Vendors</a></li>
+                            <li><a href="{% url 'Shop' %}">Shop</a></li>
+                            <li><a href="#">Terms &amp; Conditions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-link-contact">
+                        <h4>Contact Us</h4>
+                        <ul>
+                            <li>
+                                <p><i class="fas fa-map-marker-alt"></i>Address: {{Home.address |safe}} </p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:{{Home.phone}}">{{Home.phone}}</a></p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-envelope"></i>Email: <a href="{{Home.email}}">{{Home.email}}</a></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- End Footer  -->
+
+<!-- Start copyright  -->
+<div class="footer-copyright">
+    <p class="footer-company">&copy;<script>document.write(new Date().getFullYear());</script> by MarlyMart, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms &amp; Conditions</a></p>
+</div>
+<!-- End copyright  -->
+
+<a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
+<!-- ALL JS FILES -->
+<!-- <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script> -->
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- ALL PLUGINS -->
+<script src="{% static 'js/jquery.superslides.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-select.js' %}"></script>
+<script src="{% static 'js/inewsticker.js' %}"></script>
+<script src="{% static 'js/bootsnav.js' %} "></script>
+<script src="{% static 'js/images-loded.min.js' %}"></script>
+<script src="{% static 'js/isotope.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/baguetteBox.min.js' %}"></script>
+<script src="{% static 'js/form-validator.min.js' %}"></script>
+<script src="{% static 'js/contact-form-script.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+</div>
+</body>
+
+</html>

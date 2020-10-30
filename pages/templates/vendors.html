@@ -1,0 +1,99 @@
+{% extends "index.html" %}
+
+
+{% block title %}
+<title>{{Home.title}} | Vendors </title>    
+{% endblock title %}
+
+{% block navigation %}
+<!-- Collect the nav links, forms, and other content for toggling -->
+{% load mptt_tags %}
+<div class="collapse navbar-collapse" id="navbar-menu">
+	<ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+		<li class="nav-item active"><a class="nav-link" href="{% url 'Home' %}">Home</a></li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'AboutUs' %}">About Us</a></li>
+		<li class="dropdown megamenu-fw">
+			<a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Product</a>
+			<ul class="dropdown-menu megamenu-content" role="menu">
+				<li>
+					<div class="row">
+						{% recursetree category %}
+						<div class="col-menu col-md-2">
+							<h6><a {% if not node.is_leaf_node %} class="title" {% endif %} href="{% url 'CategoryView' node.id node.slug %}" title="" >{{node.title }}</a></h6>
+							<div class="content">
+								{% if not node.is_leaf_node %}
+								<ul class="children menu-col">
+									{{children}}
+								</ul>
+								{% endif %}
+							</div>
+						</div>
+						{% endrecursetree %}
+					</div>
+				</li>
+			</ul>
+		</li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'Shop' %}">Shop</a></li>
+		<li class="dropdown">
+			<a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Account</a>
+			<ul class="dropdown-menu">
+				<li><a href="{% url 'Login' %}">Login</a></li>
+				<li><a href="{% url 'Register' %}">Register</a></li>
+			</ul>
+		</li>
+		<li class="nav-item"><a class="nav-link" href="{% url 'Contact' %}">Contact Us</a></li>
+	</ul>
+</div>
+<!-- /.navbar-collapse -->
+{% endblock navigation %}
+
+
+
+{% block content %}
+<div class="all-title-box" style="background: url('{{Home.accountpic.url}}') no-repeat center center;">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<h2>Vendors</h2>
+				<ul class="breadcrumb">
+					<li class="breadcrumb-item"><a href="#">Home</a></li>
+					<li class="breadcrumb-item active">Vendors</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="" style="margin-top: 30px; margin-left: 300px;">
+	<form action="" method="get" accept-charset="utf-8" >
+		<p style="font-size: 20px;">Sort by:</p>
+		{{myfilter.form}}
+		<button class="btn hvr-hover text-center" type="submit" style="color: white;">Search</button>
+	</form>
+</div>
+<hr>
+
+<div class="row special-list" style="margin: 0 auto;margin-left: 15px; margin-top: 20px;">
+	{% for customer in customer reversed %}
+	<div class="col-xs-2 special-grid best-seller" style="margin:0 auto; margin-right: 25px;">
+		<div class="products-single fix" style="height: 350px; width: 200px; margin-bottom: 30px;">
+			<div class="box-img-hover">
+				<div class="type-lb">
+					<p class="sale">{{customer.state}}</p>
+				</div>
+				<img src="{{customer.profile_pic.url}}" class="img-fluid" alt="Image">
+				<div class="mask-icon">
+					<ul>
+						<li><a href="{% url 'VendorsView' customer.id customer.business_name %}" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+					</ul>
+					<a class="cart" href="{% url 'VendorsView' customer.id customer.business_name %}">View</a>
+				</div>
+			</div>
+			<div class="why-text">
+				<h4>{{customer.business_name}}</h4>
+				<h5><span class="fa fa-whatsapp"></span> {{customer.whatsapp}}</h5>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% endblock content %}

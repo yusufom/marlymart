@@ -1,0 +1,177 @@
+{% extends "index.html" %}
+
+
+{% block title %}
+<title>{{Home.title}} | Shop</title>
+{% endblock title %}
+{% block navigation %}
+<!-- Collect the nav links, forms, and other content for toggling -->
+{% load mptt_tags %}
+{% load static %}
+<div class="collapse navbar-collapse" id="navbar-menu">
+    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+        <li class="nav-item"><a class="nav-link" href="{% url 'Home' %}">Home</a></li>
+        <li class="nav-item" ><a class="nav-link" href="{% url 'AboutUs' %}">About Us</a></li>
+        <li class="dropdown megamenu-fw">
+            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Product</a>
+            <ul class="dropdown-menu megamenu-content" role="menu">
+                <li>
+                   <div class="row">
+                    {% recursetree category %}
+                    <div class="col-menu col-md-2">
+                        <h6><a {% if not node.is_leaf_node %} class="title" {% endif %} href="{% url 'CategoryView' node.id node.slug %}" title="" >{{node.title }}</a></h6>
+                        <div class="content">
+                            {% if not node.is_leaf_node %}
+                            <ul class="children menu-col">
+                                {{children}}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endrecursetree %}
+                </div>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item active"><a class="nav-link" href="{% url 'Shop' %}">Shop</a></li>
+    <li class="dropdown">
+        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Account</a>
+        <ul class="dropdown-menu">
+            <li><a href="{% url 'Login' %}">Login</a></li>
+            <li><a href="{% url 'Register' %}">Register</a></li>
+        </ul>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'Contact' %}">Contact Us</a></li>
+</ul>
+</div>
+<!-- /.navbar-collapse -->
+{% endblock navigation %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/buy.css' %}">
+<style type="text/css" media="screen">
+    @media screen and (min-width: 320px)  {
+      .span9{
+        max-width: 450px;
+    }
+}
+@media screen and (min-width: 768px)  {
+  .span9{
+    max-width: 1024px;
+}
+}
+@media screen and (min-width: 1224px)  {
+  .span9{
+    max-width: 2000px;
+}
+}
+.span9{
+    width: 100%;
+}
+</style>
+<!-- Start All Title Box -->
+<div class="all-title-box" style="background: url('{{Home.accountpic.url}}') no-repeat center center;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Shop</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'Home' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Shop</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+<div class="shop-box-inner">
+    <div class="container">
+        <div class="shop-content-right">
+            <div class="right-product-box">
+                <div class="product-item-filter row">
+                    <div class="col-sm-10 text-xs-left">
+                        <div class="toolbar-sorter-right">
+                            <form action="" method="get" accept-charset="utf-8">
+                                <span><p style="font-size: 20px; margin-top: -4px;">Sort by:</p></span>
+                                {{myfilter.form}}
+                                <br>
+                                <button class="btn hvr-hover text-center" type="submit" style="color: white;">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-sm-2  text-center text-xs-right">
+                        <ul class="nav nav-tabs ml-auto">
+                            <li>
+                                <a class="nav-link active" href="#grid-view" data-toggle="tab"> <i class="fa fa-th"></i> </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="#list-view" data-toggle="tab"> <i class="fa fa-list-ul"></i> </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% block shop %}
+                <div class="row product-categorie-box">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
+                            <div class="row" style="margin: 0 auto;left: 15px">
+                                {% for product in products reversed %}
+                                <div class="col-xs-3" style="margin:0 auto; margin-right: 20px;">
+                                    <div class="products-single fix" style="height: 300px; width: 200px; margin-bottom: 30px;">
+                                        <div class="box-img-hover">
+                                            <div class="type-lb">
+                                                <p class="sale">{{product.availability}}</p>
+                                            </div>
+                                            <img src="{{product.product_pic.url}}" class="img-fluid" alt="Image" style="width: 300px; height: 200px;">
+                                            <div class="mask-icon">
+                                                <ul>
+                                                    <li><a href="{% url 'ProductView' product.id product.title %}" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                                </ul>
+                                                <a class="cart" href="{{Home.whatsappweb}}{{product.user.whatsapp}}&amp;text=i would love to order this {{product.title}} (Description: {{product.description}}. Price:₦ {{product.price}}) as seen on MarlyMart.
+                                                {{Home.siteweb}}/shop/products/{{product.id}}/{{product.title}}/">Order</a>
+                                            </div>
+                                        </div>
+                                        <div class="why-text">
+                                            <h4 style="font-size: 15px; height: 32px; overflow: hidden; margin-bottom: 10px; margin-top: -10px;">{{product.title}}</h4>
+                                            <h5 style="font-size: 15px;">₦ {{product.price}}</h5>
+                                            <h6>Vendor: <a href="{% url 'VendorsView' product.user.id product.user.business_name %}" title="">{{product.user.business_name}}</a></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="list-view" style="margin: 0 auto;">
+                            <div class="span9" style="margin: 0 auto;">
+                              {% for product in products reversed %}
+                              <div class="well well-small">
+                                <div class="row-fluid">
+                                  <div class="span2"><img src="{{product.product_pic.url}}" alt="" style="width: 100px; height: 100px;"></div>
+                                  <div class="span6">
+                                    <h5>{{product.title}}</h5>
+                                    <p class="Productname" style=" overflow: auto;">{{product.description}}</p>
+                                    <p class="Productname">Vendor: <a href="{% url 'VendorsView' product.user.id product.user.business_name %}" title="">{{product.user.business_name}}</a></p>
+                                </div>
+                                <div class="span4 alignR">
+                                    <form class="form-horizontal qtyFrm">
+                                      <h3 class="ProductPrice">₦ {{product.price}}</h3>
+                                      <div class="btn-group">
+                                        <a href="{{Home.whatsappweb}}{{product.user.whatsapp}}&amp;text=i would love to order this {{product.title}} (Description: {{product.description}}. Price:₦ {{product.price}}) as seen on MarlyMart.
+                                        {{Home.siteweb}}/shop/products/{{product.id}}/{{product.title}}/" class="defaultBtn Productname"><span class=" icon-shopping-cart"></span>Order</a>
+                                        <a href="{% url 'ProductView' product.id product.title %}" class="shopBtn Productname">VIEW</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="soft">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+</div>
+{% endblock shop %}
+</div>
+</div>
+{% endblock content %}
