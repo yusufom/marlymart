@@ -18,7 +18,7 @@
 
 ## Description
 
-Marlymart is a development project which is being built to bring small-scale traders closer to their Vendors. This project can be categorized under E-commerce and the features include and not limited to:
+[MarlyMart](http://olamilekanmuktar.pythonanywhere.com/) is a development project which is being built to bring small-scale traders closer to their Vendors. This project can be categorized under E-commerce and the features include and not limited to:
 
 ![Project Image](https://muktar.s3.amazonaws.com/images/marlymart_2_0UREvPa.jpg)
 -   Secure authentication
