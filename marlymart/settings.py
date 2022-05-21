@@ -17,8 +17,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 EMAIL_BACKEND       =   'django.core.mail.backends.smtp.EmailBackend'  
 EMAIL_HOST          =   'smtp.gmail.com'
-EMAIL_HOST_USER     =   'marlymart2020@gmail.com'
-EMAIL_HOST_PASSWORD =   'November-04'
 EMAIL_PORT          =   587
 EMAIL_USE_TLS       =   True
 
