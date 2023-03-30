@@ -30,7 +30,7 @@ SECRET_KEY = '!sgll0a@5-jm8=gnua5$p44#yu!s^c9ku%q$!g(rbzx!#phul%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['marlymart.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['marlymart.herokuapp.com', '127.0.0.1', 'OlamilekanMuktar.pythonanywhere.com']
 
 
 # Application definition
